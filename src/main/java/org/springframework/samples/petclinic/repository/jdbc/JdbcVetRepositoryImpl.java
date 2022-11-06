@@ -27,7 +27,6 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -72,7 +71,7 @@ public class JdbcVetRepositoryImpl implements VetRepository {
      * Refresh the cache of Vets that the ClinicService is holding.
      */
     @Override
-    public Collection<Vet> findAll() throws DataAccessException {
+    public Collection<Vet> findAll() {
         List<Vet> vets = new ArrayList<>();
         // Retrieve the list of all vets.
         vets.addAll(this.jdbcTemplate.query(
@@ -102,9 +101,9 @@ public class JdbcVetRepositoryImpl implements VetRepository {
         }
         return vets;
     }
-    
+
 	@Override
-	public Vet findById(int id) throws DataAccessException {
+	public Vet findById(int id) {
 		Vet vet;
 		try {
 			Map<String, Object> vet_params = new HashMap<>();
@@ -138,7 +137,7 @@ public class JdbcVetRepositoryImpl implements VetRepository {
 	}
 
 	@Override
-	public void save(Vet vet) throws DataAccessException {
+	public void save(Vet vet) {
 		BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(vet);
 		if (vet.isNew()) {
 			Number newKey = this.insertVet.executeAndReturnKey(parameterSource);
@@ -152,14 +151,14 @@ public class JdbcVetRepositoryImpl implements VetRepository {
 	}
 
 	@Override
-	public void delete(Vet vet) throws DataAccessException {
+	public void delete(Vet vet) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", vet.getId());
 		this.namedParameterJdbcTemplate.update("DELETE FROM vet_specialties WHERE vet_id=:id", params);
 		this.namedParameterJdbcTemplate.update("DELETE FROM vets WHERE id=:id", params);
 	}
-	
-	private void updateVetSpecialties(Vet vet) throws DataAccessException {
+
+	private void updateVetSpecialties(Vet vet) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", vet.getId());
 		this.namedParameterJdbcTemplate.update("DELETE FROM vet_specialties WHERE vet_id=:id", params);

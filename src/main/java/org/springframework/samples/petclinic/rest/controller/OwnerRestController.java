@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
+import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 
@@ -93,13 +94,17 @@ public class OwnerRestController implements OwnersApi {
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
     @Override
     public ResponseEntity<OwnerDto> addOwner(OwnerFieldsDto ownerFieldsDto) {
-        HttpHeaders headers = new HttpHeaders();
         Owner owner = ownerMapper.toOwner(ownerFieldsDto);
         this.clinicService.saveOwner(owner);
         OwnerDto ownerDto = ownerMapper.toOwnerDto(owner);
-        headers.setLocation(UriComponentsBuilder.newInstance()
-            .path("/api/owners/{id}").buildAndExpand(owner.getId()).toUri());
-        return new ResponseEntity<>(ownerDto, headers, HttpStatus.CREATED);
+        return ResponseEntity.created(getLocation(owner.getId())).body(ownerDto);
+    }
+
+    private static URI getLocation(Integer ownerId) {
+        return UriComponentsBuilder.newInstance()
+            .path("/api/owners/{id}")
+            .buildAndExpand(ownerId)
+            .toUri();
     }
 
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")

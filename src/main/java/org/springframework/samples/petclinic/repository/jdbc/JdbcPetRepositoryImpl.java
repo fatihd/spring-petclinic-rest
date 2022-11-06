@@ -25,7 +25,6 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -79,7 +78,7 @@ public class JdbcPetRepositoryImpl implements PetRepository {
     }
 
     @Override
-    public List<PetType> findPetTypes() throws DataAccessException {
+    public List<PetType> findPetTypes() {
         Map<String, Object> params = new HashMap<>();
         return this.namedParameterJdbcTemplate.query(
             "SELECT id, name FROM types ORDER BY name",
@@ -88,7 +87,7 @@ public class JdbcPetRepositoryImpl implements PetRepository {
     }
 
     @Override
-    public Pet findById(int id) throws DataAccessException {
+    public Pet findById(int id) {
         Integer ownerId;
         try {
             Map<String, Object> params = new HashMap<>();
@@ -102,7 +101,7 @@ public class JdbcPetRepositoryImpl implements PetRepository {
     }
 
     @Override
-    public void save(Pet pet) throws DataAccessException {
+    public void save(Pet pet) {
         if (pet.isNew()) {
             Number newKey = this.insertPet.executeAndReturnKey(
                 createPetParameterSource(pet));
@@ -126,9 +125,9 @@ public class JdbcPetRepositoryImpl implements PetRepository {
             .addValue("type_id", pet.getType().getId())
             .addValue("owner_id", pet.getOwner().getId());
     }
-    
+
 	@Override
-	public Collection<Pet> findAll() throws DataAccessException {
+	public Collection<Pet> findAll() {
 		Map<String, Object> params = new HashMap<>();
 		Collection<Pet> pets = new ArrayList<Pet>();
 		Collection<JdbcPet> jdbcPets = new ArrayList<JdbcPet>();
@@ -153,7 +152,7 @@ public class JdbcPetRepositoryImpl implements PetRepository {
 	}
 
 	@Override
-	public void delete(Pet pet) throws DataAccessException {
+	public void delete(Pet pet) {
 		Map<String, Object> pet_params = new HashMap<>();
 		pet_params.put("id", pet.getId());
 		List<Visit> visits = pet.getVisits();

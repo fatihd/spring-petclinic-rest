@@ -1,0 +1,110 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'jacoco'
+    id 'org.kordamp.gradle.jdeps' version '0.19.0'
+    id "io.sitoolkit.cv.sit-cv-gradle-plugin" version "1.1.1"
+}
+
+apply from: 'src/build/groovy/aplugin.gradle'
+apply from: 'src/build/groovy/openapi.gradle'
+
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+    mavenCentral()
+}
+
+ext {
+    mapstructVersion = "1.5.3.Final"
+    springBootVersion = '2.7.5'
+    jacksonVersion = '2.13.1'
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-aop:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-cache:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-validation:$springBootVersion"
+    implementation "org.springframework.data:spring-data-jdbc-core:1.2.1.RELEASE"
+    implementation "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    implementation "org.springdoc:springdoc-openapi-ui:1.6.11"
+    implementation "org.openapitools:jackson-databind-nullable:0.2.1"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
+    implementation "javax.xml.bind:jaxb-api:2.3.0"
+
+    implementation "org.mapstruct:mapstruct:$mapstructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+//    compileOnly 'org.projectlombok:lombok'
+//    annotationProcessor 'org.projectlombok:lombok'
+//    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+    implementation 'jakarta.inject:jakarta.inject-api:2.0.1.MR'
+
+    runtimeOnly 'org.hsqldb:hsqldb:2.5.2'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.27'
+    runtimeOnly 'org.postgresql:postgresql:42.3.1'
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    testImplementation 'org.springframework.security:spring-security-test:5.6.1'
+    testImplementation 'com.jayway.jsonpath:json-path:2.6.0'
+    testImplementation 'org.mockito:mockito-core:4.0.0'
+}
+
+group = 'org.springframework.samples'
+version = "$springBootVersion"
+description = 'spring-petclinic-rest'
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.compilerArgs = [
+            '-Amapstruct.suppressGeneratorTimestamp=true',
+            '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+            '-Amapstruct.defaultComponentModel=spring'
+    ]
+}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        showStandardStreams = true
+    }
+}
+
+jacocoTestReport {
+    dependsOn test
+
+    reports {
+//        xml.required = false
+//        csv.required = false
+//        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    'org/springframework/samples/petclinic/rest/dto/**',
+                    'org/springframework/samples/petclinic/rest/api/**'
+            ])
+        }))
+    }
+}
+

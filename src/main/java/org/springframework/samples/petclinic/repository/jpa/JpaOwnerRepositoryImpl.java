@@ -22,7 +22,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.context.annotation.Profile;
-import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
@@ -81,16 +80,16 @@ public class JpaOwnerRepositoryImpl implements OwnerRepository {
 
     }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Collection<Owner> findAll() throws DataAccessException {
-		Query query = this.em.createQuery("SELECT owner FROM Owner owner");
+    @SuppressWarnings("unchecked")
+    @Override
+    public Collection<Owner> findAll() {
+        Query query = this.em.createQuery("SELECT owner FROM Owner owner");
         return query.getResultList();
-	}
+    }
 
-	@Override
-	public void delete(Owner owner) throws DataAccessException {
-		this.em.remove(this.em.contains(owner) ? owner : this.em.merge(owner));
-	}
+    @Override
+    public void delete(Owner owner) {
+        this.em.remove(this.em.contains(owner) ? owner : this.em.merge(owner));
+    }
 
 }

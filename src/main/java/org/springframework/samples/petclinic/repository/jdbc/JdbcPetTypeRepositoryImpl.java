@@ -26,7 +26,6 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -47,11 +46,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Profile("jdbc")
 public class JdbcPetTypeRepositoryImpl implements PetTypeRepository {
-	
+
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-	
+
 	private SimpleJdbcInsert insertPetType;
-	
+
 	@Autowired
 	public JdbcPetTypeRepositoryImpl(DataSource dataSource) {
 		this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
@@ -77,7 +76,7 @@ public class JdbcPetTypeRepositoryImpl implements PetTypeRepository {
 	}
 
 	@Override
-	public Collection<PetType> findAll() throws DataAccessException {
+	public Collection<PetType> findAll() {
 		Map<String, Object> params = new HashMap<>();
         return this.namedParameterJdbcTemplate.query(
             "SELECT id, name FROM types",
@@ -86,7 +85,7 @@ public class JdbcPetTypeRepositoryImpl implements PetTypeRepository {
 	}
 
 	@Override
-	public void save(PetType petType) throws DataAccessException {
+	public void save(PetType petType) {
 		BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(petType);
 		if (petType.isNew()) {
             Number newKey = this.insertPetType.executeAndReturnKey(parameterSource);
@@ -98,7 +97,7 @@ public class JdbcPetTypeRepositoryImpl implements PetTypeRepository {
 	}
 
 	@Override
-	public void delete(PetType petType) throws DataAccessException {
+	public void delete(PetType petType) {
 		Map<String, Object> pettype_params = new HashMap<>();
 		pettype_params.put("id", petType.getId());
 		List<Pet> pets = new ArrayList<Pet>();

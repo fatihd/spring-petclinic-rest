@@ -6,8 +6,6 @@ import org.springframework.samples.petclinic.rest.dto.UserDto;
 import org.springframework.samples.petclinic.model.Role;
 import org.springframework.samples.petclinic.model.User;
 
-import java.util.Collection;
-
 /**
  * Map User/Role & UserDto/RoleDto using mapstruct
  */
@@ -17,12 +15,7 @@ public interface UserMapper {
 
     RoleDto toRoleDto(Role role);
 
-    Collection<RoleDto> toRoleDtos(Collection<Role> roles);
-
     User toUser(UserDto userDto);
 
     UserDto toUserDto(User user);
-
-    Collection<Role> toRoles(Collection<RoleDto> roleDtos);
-
 }

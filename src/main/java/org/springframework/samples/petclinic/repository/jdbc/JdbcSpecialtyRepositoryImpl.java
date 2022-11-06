@@ -24,7 +24,6 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -43,9 +42,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Profile("jdbc")
 public class JdbcSpecialtyRepositoryImpl implements SpecialtyRepository {
-	
+
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-	
+
 	private SimpleJdbcInsert insertSpecialty;
 
 	@Autowired
@@ -73,7 +72,7 @@ public class JdbcSpecialtyRepositoryImpl implements SpecialtyRepository {
 	}
 
 	@Override
-	public Collection<Specialty> findAll() throws DataAccessException {
+	public Collection<Specialty> findAll() {
 		Map<String, Object> params = new HashMap<>();
         return this.namedParameterJdbcTemplate.query(
             "SELECT id, name FROM specialties",
@@ -82,7 +81,7 @@ public class JdbcSpecialtyRepositoryImpl implements SpecialtyRepository {
 	}
 
 	@Override
-	public void save(Specialty specialty) throws DataAccessException {
+	public void save(Specialty specialty) {
 		BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(specialty);
 		if (specialty.isNew()) {
             Number newKey = this.insertSpecialty.executeAndReturnKey(parameterSource);
@@ -95,7 +94,7 @@ public class JdbcSpecialtyRepositoryImpl implements SpecialtyRepository {
 	}
 
 	@Override
-	public void delete(Specialty specialty) throws DataAccessException {
+	public void delete(Specialty specialty) {
 		Map<String, Object> params = new HashMap<>();
         params.put("id", specialty.getId());
         this.namedParameterJdbcTemplate.update("DELETE FROM vet_specialties WHERE specialty_id=:id", params);

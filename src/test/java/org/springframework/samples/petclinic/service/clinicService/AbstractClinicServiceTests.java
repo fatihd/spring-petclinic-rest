@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.service.ClinicService;
+import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,6 +53,9 @@ abstract class AbstractClinicServiceTests {
 
     @Autowired
     protected ClinicService clinicService;
+
+    @Autowired
+    protected PetService petService;
 
     @Test
     void shouldFindOwnersByLastName() {
@@ -107,7 +111,7 @@ abstract class AbstractClinicServiceTests {
 
     @Test
     void shouldFindPetWithCorrectId() {
-        Pet pet7 = this.clinicService.findPetById(7);
+        Pet pet7 = this.petService.findPetById(7);
         assertThat(pet7.getName()).startsWith("Samantha");
         assertThat(pet7.getOwner().getFirstName()).isEqualTo("Jean");
 
@@ -137,7 +141,7 @@ abstract class AbstractClinicServiceTests {
         owner6.addPet(pet);
         assertThat(owner6.getPets().size()).isEqualTo(found + 1);
 
-        this.clinicService.savePet(pet);
+        this.petService.savePet(pet);
         this.clinicService.saveOwner(owner6);
 
         owner6 = this.clinicService.findOwnerById(6);
@@ -148,15 +152,15 @@ abstract class AbstractClinicServiceTests {
 
     @Test
     @Transactional
-    void shouldUpdatePetName() throws Exception {
-        Pet pet7 = this.clinicService.findPetById(7);
+    void shouldUpdatePetName() {
+        Pet pet7 = this.petService.findPetById(7);
         String oldName = pet7.getName();
 
         String newName = oldName + "X";
         pet7.setName(newName);
-        this.clinicService.savePet(pet7);
+        this.petService.savePet(pet7);
 
-        pet7 = this.clinicService.findPetById(7);
+        pet7 = this.petService.findPetById(7);
         assertThat(pet7.getName()).isEqualTo(newName);
     }
 
@@ -174,24 +178,24 @@ abstract class AbstractClinicServiceTests {
     @Test
     @Transactional
     void shouldAddNewVisitForPet() {
-        Pet pet7 = this.clinicService.findPetById(7);
+        Pet pet7 = this.petService.findPetById(7);
         int found = pet7.getVisits().size();
         Visit visit = new Visit();
         pet7.addVisit(visit);
         visit.setDescription("test");
         this.clinicService.saveVisit(visit);
-        this.clinicService.savePet(pet7);
+        this.petService.savePet(pet7);
 
-        pet7 = this.clinicService.findPetById(7);
+        pet7 = this.petService.findPetById(7);
         assertThat(pet7.getVisits().size()).isEqualTo(found + 1);
         assertThat(visit.getId()).isNotNull();
     }
 
     @Test
-       void shouldFindVisitsByPetId() throws Exception {
+    void shouldFindVisitsByPetId() {
         Collection<Visit> visits = this.clinicService.findVisitsByPetId(7);
         assertThat(visits.size()).isEqualTo(2);
-        Visit[] visitArr = visits.toArray(new Visit[visits.size()]);
+        Visit[] visitArr = visits.toArray(new Visit[0]);
         assertThat(visitArr[0].getPet()).isNotNull();
         assertThat(visitArr[0].getDate()).isNotNull();
         assertThat(visitArr[0].getPet().getId()).isEqualTo(7);
@@ -199,7 +203,7 @@ abstract class AbstractClinicServiceTests {
 
     @Test
     void shouldFindAllPets(){
-        Collection<Pet> pets = this.clinicService.findAllPets();
+        Collection<Pet> pets = this.petService.findAllPets();
         Pet pet1 = EntityUtils.getById(pets, Pet.class, 1);
         assertThat(pet1.getName()).isEqualTo("Leo");
         Pet pet3 = EntityUtils.getById(pets, Pet.class, 3);
@@ -208,14 +212,14 @@ abstract class AbstractClinicServiceTests {
 
     @Test
     @Transactional
-    void shouldDeletePet(){
-        Pet pet = this.clinicService.findPetById(1);
-        this.clinicService.deletePet(pet);
+    void shouldDeletePet() {
+        Pet pet = this.petService.findPetById(1);
+        this.petService.deletePet(pet);
         try {
-            pet = this.clinicService.findPetById(1);
-		} catch (Exception e) {
-			pet = null;
-		}
+            pet = this.petService.findPetById(1);
+        } catch (Exception e) {
+            pet = null;
+        }
         assertThat(pet).isNull();
     }
 
@@ -241,7 +245,7 @@ abstract class AbstractClinicServiceTests {
         Collection<Visit> visits = this.clinicService.findAllVisits();
         int found = visits.size();
 
-        Pet pet = this.clinicService.findPetById(1);
+        Pet pet = this.petService.findPetById(1);
 
         Visit visit = new Visit();
         visit.setPet(pet);

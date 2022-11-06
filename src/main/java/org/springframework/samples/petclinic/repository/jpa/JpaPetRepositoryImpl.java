@@ -22,7 +22,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.context.annotation.Profile;
-import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.repository.PetRepository;
@@ -63,15 +62,15 @@ public class JpaPetRepositoryImpl implements PetRepository {
             this.em.merge(pet);
         }
     }
-    
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<Pet> findAll() throws DataAccessException {
+	public Collection<Pet> findAll() {
 		return this.em.createQuery("SELECT pet FROM Pet pet").getResultList();
 	}
 
 	@Override
-	public void delete(Pet pet) throws DataAccessException {
+	public void delete(Pet pet) {
 		//this.em.remove(this.em.contains(pet) ? pet : this.em.merge(pet));
 		String petId = pet.getId().toString();
 		this.em.createQuery("DELETE FROM Visit visit WHERE pet_id=" + petId).executeUpdate();

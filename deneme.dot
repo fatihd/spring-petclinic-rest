@@ -1,0 +1,174 @@
+digraph "main" {
+    // Path: C:\Users\kullanici\source\repos\spring-petclinic-rest\build\classes\java\main
+   "petclinic"            -> "java.lang";
+"petclinic"            -> "org.springframework.boot (not found)";
+"petclinic"            -> "org.springframework.boot.autoconfigure (not found)";
+"petclinic"            -> "org.springframework.boot.web.servlet.support (not found)";
+"petclinic"            -> "org.springframework.context (not found)";
+"petclinic.config"     -> "io.swagger.v3.oas.models (not found)";
+"petclinic.config"     -> "io.swagger.v3.oas.models.info (not found)";
+"petclinic.config"     -> "java.lang";
+"petclinic.config"     -> "java.util";
+"petclinic.config"     -> "org.springframework.context.annotation (not found)";
+"petclinic.mapper"     -> "java.lang";
+"petclinic.mapper"     -> "java.time";
+"petclinic.mapper"     -> "java.util";
+"petclinic.mapper"     -> "org.springframework.beans.factory.annotation (not found)";
+"petclinic.mapper"     -> "petclinic.model (main)";
+"petclinic.mapper"     -> "petclinic.rest.dto (main)";
+"petclinic.mapper"     -> "org.springframework.stereotype (not found)";
+"petclinic.model"      -> "com.fasterxml.jackson.annotation (not found)";
+"petclinic.model"      -> "java.lang";
+"petclinic.model"      -> "java.time";
+"petclinic.model"      -> "java.util";
+"petclinic.model"      -> "javax.persistence (not found)";
+"petclinic.model"      -> "javax.validation.constraints (not found)";
+"petclinic.model"      -> "javax.xml.bind.annotation";
+"petclinic.model"      -> "org.springframework.beans.support (not found)";
+"petclinic.model"      -> "org.springframework.core.style (not found)";
+"petclinic.repository" -> "java.lang";
+"petclinic.repository" -> "java.util";
+"petclinic.repository" -> "org.springframework.dao (not found)";
+"petclinic.repository" -> "petclinic.model (main)";
+"petclinic.repository.jdbc" -> "java.lang";
+"petclinic.repository.jdbc" -> "java.sql";
+"petclinic.repository.jdbc" -> "java.time";
+"petclinic.repository.jdbc" -> "java.util";
+"petclinic.repository.jdbc" -> "javax.sql";
+"petclinic.repository.jdbc" -> "javax.transaction (not found)";
+"petclinic.repository.jdbc" -> "org.springframework.beans.factory.annotation (not found)";
+"petclinic.repository.jdbc" -> "org.springframework.context.annotation (not found)";
+"petclinic.repository.jdbc" -> "org.springframework.dao (not found)";
+"petclinic.repository.jdbc" -> "org.springframework.data.jdbc.core (not found)";
+"petclinic.repository.jdbc" -> "org.springframework.jdbc.core (not found)";
+"petclinic.repository.jdbc" -> "org.springframework.jdbc.core.namedparam (not found)";
+"petclinic.repository.jdbc" -> "org.springframework.jdbc.core.simple (not found)";
+"petclinic.repository.jdbc" -> "org.springframework.orm (not found)";
+"petclinic.repository.jdbc" -> "petclinic.model (main)";
+"petclinic.repository.jdbc" -> "petclinic.repository (main)";
+"petclinic.repository.jdbc" -> "petclinic.util (main)";
+"petclinic.repository.jdbc" -> "org.springframework.stereotype (not found)";
+"petclinic.repository.jpa" -> "java.lang";
+"petclinic.repository.jpa" -> "java.util";
+"petclinic.repository.jpa" -> "javax.persistence (not found)";
+"petclinic.repository.jpa" -> "org.springframework.context.annotation (not found)";
+"petclinic.repository.jpa" -> "org.springframework.dao (not found)";
+"petclinic.repository.jpa" -> "petclinic.model (main)";
+"petclinic.repository.jpa" -> "petclinic.repository (main)";
+"petclinic.repository.jpa" -> "org.springframework.stereotype (not found)";
+"petclinic.repository.springdatajpa" -> "java.lang";
+"petclinic.repository.springdatajpa" -> "java.util";
+"petclinic.repository.springdatajpa" -> "javax.persistence (not found)";
+"petclinic.repository.springdatajpa" -> "org.springframework.context.annotation (not found)";
+"petclinic.repository.springdatajpa" -> "org.springframework.dao (not found)";
+"petclinic.repository.springdatajpa" -> "org.springframework.data.jpa.repository (not found)";
+"petclinic.repository.springdatajpa" -> "org.springframework.data.repository (not found)";
+"petclinic.repository.springdatajpa" -> "org.springframework.data.repository.query (not found)";
+"petclinic.repository.springdatajpa" -> "petclinic.model (main)";
+"petclinic.repository.springdatajpa" -> "petclinic.repository (main)";
+"petclinic.rest.advice" -> "com.fasterxml.jackson.core (not found)";
+"petclinic.rest.advice" -> "com.fasterxml.jackson.databind (not found)";
+"petclinic.rest.advice" -> "java.lang";
+"petclinic.rest.advice" -> "org.springframework.http (not found)";
+"petclinic.rest.advice" -> "petclinic.rest.controller (main)";
+"petclinic.rest.advice" -> "org.springframework.util (not found)";
+"petclinic.rest.advice" -> "org.springframework.validation (not found)";
+"petclinic.rest.advice" -> "org.springframework.web.bind (not found)";
+"petclinic.rest.advice" -> "org.springframework.web.bind.annotation (not found)";
+"petclinic.rest.advice" -> "org.springframework.web.context.request (not found)";
+"petclinic.rest.api"   -> "io.swagger.v3.oas.annotations (not found)";
+"petclinic.rest.api"   -> "io.swagger.v3.oas.annotations.tags (not found)";
+"petclinic.rest.api"   -> "java.io";
+"petclinic.rest.api"   -> "java.lang";
+"petclinic.rest.api"   -> "java.lang.invoke";
+"petclinic.rest.api"   -> "java.util";
+"petclinic.rest.api"   -> "java.util.function";
+"petclinic.rest.api"   -> "javax.servlet.http (not found)";
+"petclinic.rest.api"   -> "javax.validation (not found)";
+"petclinic.rest.api"   -> "javax.validation.constraints (not found)";
+"petclinic.rest.api"   -> "org.springframework.http (not found)";
+"petclinic.rest.api"   -> "petclinic.rest.dto (main)";
+"petclinic.rest.api"   -> "org.springframework.validation.annotation (not found)";
+"petclinic.rest.api"   -> "org.springframework.web.bind.annotation (not found)";
+"petclinic.rest.api"   -> "org.springframework.web.context.request (not found)";
+"petclinic.rest.controller" -> "com.fasterxml.jackson.annotation (not found)";
+"petclinic.rest.controller" -> "com.fasterxml.jackson.core (not found)";
+"petclinic.rest.controller" -> "com.fasterxml.jackson.databind (not found)";
+"petclinic.rest.controller" -> "java.io";
+"petclinic.rest.controller" -> "java.lang";
+"petclinic.rest.controller" -> "java.net";
+"petclinic.rest.controller" -> "java.time";
+"petclinic.rest.controller" -> "java.util";
+"petclinic.rest.controller" -> "javax.servlet.http (not found)";
+"petclinic.rest.controller" -> "javax.transaction (not found)";
+"petclinic.rest.controller" -> "org.springframework.beans.factory.annotation (not found)";
+"petclinic.rest.controller" -> "org.springframework.http (not found)";
+"petclinic.rest.controller" -> "petclinic.mapper (main)";
+"petclinic.rest.controller" -> "petclinic.model (main)";
+"petclinic.rest.controller" -> "petclinic.rest.api (main)";
+"petclinic.rest.controller" -> "petclinic.rest.dto (main)";
+"petclinic.rest.controller" -> "petclinic.service (main)";
+"petclinic.rest.controller" -> "org.springframework.security.access.prepost (not found)";
+"petclinic.rest.controller" -> "org.springframework.util (not found)";
+"petclinic.rest.controller" -> "org.springframework.validation (not found)";
+"petclinic.rest.controller" -> "org.springframework.web.bind.annotation (not found)";
+"petclinic.rest.controller" -> "org.springframework.web.util (not found)";
+"petclinic.rest.dto"   -> "com.fasterxml.jackson.annotation (not found)";
+"petclinic.rest.dto"   -> "io.swagger.v3.oas.annotations.media (not found)";
+"petclinic.rest.dto"   -> "java.lang";
+"petclinic.rest.dto"   -> "java.net";
+"petclinic.rest.dto"   -> "java.time";
+"petclinic.rest.dto"   -> "java.util";
+"petclinic.rest.dto"   -> "javax.validation (not found)";
+"petclinic.rest.dto"   -> "javax.validation.constraints (not found)";
+"petclinic.rest.dto"   -> "org.springframework.format.annotation (not found)";
+"petclinic.security"   -> "java.lang";
+"petclinic.security"   -> "javax.sql";
+"petclinic.security"   -> "org.springframework.beans.factory.annotation (not found)";
+"petclinic.security"   -> "org.springframework.boot.autoconfigure.condition (not found)";
+"petclinic.security"   -> "org.springframework.context.annotation (not found)";
+"petclinic.security"   -> "org.springframework.security.config.annotation (not found)";
+"petclinic.security"   -> "org.springframework.security.config.annotation.authentication.builders (not found)";
+"petclinic.security"   -> "org.springframework.security.config.annotation.authentication.configurers.provisioning (not found)";
+"petclinic.security"   -> "org.springframework.security.config.annotation.method.configuration (not found)";
+"petclinic.security"   -> "org.springframework.security.config.annotation.web (not found)";
+"petclinic.security"   -> "org.springframework.security.config.annotation.web.builders (not found)";
+"petclinic.security"   -> "org.springframework.security.config.annotation.web.configuration (not found)";
+"petclinic.security"   -> "org.springframework.security.config.annotation.web.configurers (not found)";
+"petclinic.security"   -> "org.springframework.stereotype (not found)";
+"petclinic.service"    -> "java.lang";
+"petclinic.service"    -> "java.util";
+"petclinic.service"    -> "org.springframework.beans.factory.annotation (not found)";
+"petclinic.service"    -> "org.springframework.cache.annotation (not found)";
+"petclinic.service"    -> "org.springframework.dao (not found)";
+"petclinic.service"    -> "org.springframework.orm (not found)";
+"petclinic.service"    -> "petclinic.model (main)";
+"petclinic.service"    -> "petclinic.repository (main)";
+"petclinic.service"    -> "org.springframework.stereotype (not found)";
+"petclinic.service"    -> "org.springframework.transaction.annotation (not found)";
+"petclinic.util"       -> "java.lang";
+"petclinic.util"       -> "java.util";
+"petclinic.util"       -> "org.aspectj.lang (not found)";
+"petclinic.util"       -> "org.aspectj.lang.annotation (not found)";
+"petclinic.util"       -> "org.springframework.jmx.export.annotation (not found)";
+"petclinic.util"       -> "org.springframework.orm (not found)";
+"petclinic.util"       -> "petclinic.model (main)";
+"petclinic.util"       -> "org.springframework.util (not found)";
+
+"petclinic"            [color="red"]
+"petclinic.config"     [color="red"]
+"petclinic.mapper"     [color="red"]
+"petclinic.model"      [color="red"]
+"petclinic.repository" [color="red"]
+"petclinic.repository.jdbc" [color="red"]
+"petclinic.repository.jpa" [color="red"]
+"petclinic.repository.springdatajpa" [color="red"]
+"petclinic.rest.advice" [color="red"]
+"petclinic.rest.api"   [color="red"]
+"petclinic.rest.controller" [color="red"]
+"petclinic.rest.dto"   [color="red"]
+"petclinic.security"   [color="red"]
+"petclinic.service"    [color="red"]
+"petclinic.util"       [color="red"]
+
+}

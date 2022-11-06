@@ -13,8 +13,11 @@ import java.util.Collection;
  */
 @Mapper(uses = PetMapper.class)
 public interface VisitMapper {
+    @Mapping(target = "pet", ignore = true)
     Visit toVisit(VisitDto visitDto);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "pet", ignore = true)
     Visit toVisit(VisitFieldsDto visitFieldsDto);
 
     @Mapping(source = "pet.id", target = "petId")

@@ -17,7 +17,6 @@ package org.springframework.samples.petclinic.repository.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -97,7 +96,7 @@ public class JdbcVisitRepositoryImpl implements VisitRepository {
     }
 
     @Override
-    public Visit findById(int id) throws DataAccessException {
+    public Visit findById(int id) {
         Visit visit;
         try {
             Map<String, Object> params = new HashMap<>();
@@ -113,7 +112,7 @@ public class JdbcVisitRepositoryImpl implements VisitRepository {
     }
 
     @Override
-    public Collection<Visit> findAll() throws DataAccessException {
+    public Collection<Visit> findAll() {
         Map<String, Object> params = new HashMap<>();
         return this.namedParameterJdbcTemplate.query(
             "SELECT id as visit_id, pets.id as pets_id, visit_date, description FROM visits LEFT JOIN pets ON visits.pet_id = pets.id",
@@ -121,7 +120,7 @@ public class JdbcVisitRepositoryImpl implements VisitRepository {
     }
 
     @Override
-    public void save(Visit visit) throws DataAccessException {
+    public void save(Visit visit) {
         if (visit.isNew()) {
             Number newKey = this.insertVisit.executeAndReturnKey(createVisitParameterSource(visit));
             visit.setId(newKey.intValue());
@@ -133,7 +132,7 @@ public class JdbcVisitRepositoryImpl implements VisitRepository {
     }
 
     @Override
-    public void delete(Visit visit) throws DataAccessException {
+    public void delete(Visit visit) {
         Map<String, Object> params = new HashMap<>();
         params.put("id", visit.getId());
         this.namedParameterJdbcTemplate.update("DELETE FROM visits WHERE id=:id", params);

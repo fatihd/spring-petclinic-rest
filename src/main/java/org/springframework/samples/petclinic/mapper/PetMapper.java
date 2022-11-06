@@ -17,6 +17,7 @@ import java.util.Collection;
 public interface PetMapper {
 
     @Mapping(source = "owner.id", target = "ownerId")
+    @Mapping(target = "visits.petId", ignore = true)
     PetDto toPetDto(Pet pet);
 
     Collection<PetDto> toPetsDto(Collection<Pet> pets);
@@ -30,6 +31,4 @@ public interface PetMapper {
     PetTypeDto toPetTypeDto(PetType petType);
 
     PetType toPetType(PetTypeDto petTypeDto);
-
-    Collection<PetTypeDto> toPetTypeDtos(Collection<PetType> petTypes);
 }

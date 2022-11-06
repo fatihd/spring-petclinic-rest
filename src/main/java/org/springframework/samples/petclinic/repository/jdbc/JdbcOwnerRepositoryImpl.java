@@ -17,7 +17,6 @@ package org.springframework.samples.petclinic.repository.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -77,7 +76,7 @@ public class JdbcOwnerRepositoryImpl implements OwnerRepository {
      * already loaded.
      */
     @Override
-    public Collection<Owner> findByLastName(String lastName) throws DataAccessException {
+    public Collection<Owner> findByLastName(String lastName) {
         Map<String, Object> params = new HashMap<>();
         params.put("lastName", lastName + "%");
         List<Owner> owners = this.namedParameterJdbcTemplate.query(
@@ -94,7 +93,7 @@ public class JdbcOwnerRepositoryImpl implements OwnerRepository {
      * for the corresponding owner, if not already loaded.
      */
     @Override
-    public Owner findById(int id) throws DataAccessException {
+    public Owner findById(int id) {
         Owner owner;
         try {
             Map<String, Object> params = new HashMap<>();
@@ -127,7 +126,7 @@ public class JdbcOwnerRepositoryImpl implements OwnerRepository {
     }
 
     @Override
-    public void save(Owner owner) throws DataAccessException {
+    public void save(Owner owner) {
         BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(owner);
         if (owner.isNew()) {
             Number newKey = this.insertOwner.executeAndReturnKey(parameterSource);
@@ -140,7 +139,7 @@ public class JdbcOwnerRepositoryImpl implements OwnerRepository {
         }
     }
 
-    public Collection<PetType> getPetTypes() throws DataAccessException {
+    public Collection<PetType> getPetTypes() {
         return this.namedParameterJdbcTemplate.query(
             "SELECT id, name FROM types ORDER BY name", new HashMap<String, Object>(),
             BeanPropertyRowMapper.newInstance(PetType.class));
@@ -157,9 +156,9 @@ public class JdbcOwnerRepositoryImpl implements OwnerRepository {
             loadPetsAndVisits(owner);
         }
     }
-    
+
 	@Override
-	public Collection<Owner> findAll() throws DataAccessException {
+	public Collection<Owner> findAll() {
 		List<Owner> owners = this.namedParameterJdbcTemplate.query(
 	            "SELECT id, first_name, last_name, address, city, telephone FROM owners",
 	            new HashMap<String, Object>(),
@@ -172,7 +171,7 @@ public class JdbcOwnerRepositoryImpl implements OwnerRepository {
 
 	@Override
 	@Transactional
-	public void delete(Owner owner) throws DataAccessException {
+	public void delete(Owner owner) {
 		Map<String, Object> owner_params = new HashMap<>();
 		owner_params.put("id", owner.getId());
         List<Pet> pets = owner.getPets();

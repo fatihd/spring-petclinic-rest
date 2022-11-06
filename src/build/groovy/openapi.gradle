@@ -1,0 +1,40 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url "https://repo1.maven.org/maven2" }
+        // or, via Gradle Plugin Portal:
+        // url "https://plugins.gradle.org/m2/"
+    }
+    dependencies {
+        classpath "org.openapitools:openapi-generator-gradle-plugin:6.2.1"
+    }
+}
+
+apply plugin: org.openapitools.generator.gradle.plugin.OpenApiGeneratorPlugin
+
+openApiGenerate {
+    inputSpec = "$rootDir/src/main/resources/openapi.yml".toString()
+    generatorName = 'spring'
+    library = 'spring-boot'
+    modelNameSuffix = 'Dto'
+    apiPackage = 'org.springframework.samples.petclinic.rest.api'
+//    generateModels=true
+    modelPackage = 'org.springframework.samples.petclinic.rest.dto'
+//    generateApis=true
+    outputDir = "$buildDir/generated".toString()
+//    invokerPackage = "org.openapi.example.invoker"
+    configOptions = [
+            interfaceOnly        : 'true',
+            performBeanValidation: 'true',
+            dateLibrary          : 'java8',
+            java8                : 'true',
+            openApiNullable      : 'false',
+            serializationLibrary : 'jackson',
+            documentationProvider: 'springdoc'
+    ]
+}
+
+compileJava.dependsOn tasks.openApiGenerate
+
+sourceSets.main.java.srcDirs += ["$buildDir/generated/src/main/java"]
+
