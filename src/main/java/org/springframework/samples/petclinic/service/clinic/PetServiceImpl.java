@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.service;
+package org.springframework.samples.petclinic.service.clinic;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -33,6 +33,7 @@ import java.util.Collection;
  * @author Vitaliy Fedoriv
  */
 @Service
+@javax.transaction.Transactional
 public class PetServiceImpl implements PetService {
 
     private PetRepository petRepository;

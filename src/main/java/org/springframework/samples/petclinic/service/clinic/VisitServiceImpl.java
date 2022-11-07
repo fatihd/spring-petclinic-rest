@@ -1,15 +1,16 @@
 package org.springframework.samples.petclinic.service.clinic;
 
-import jakarta.inject.Named;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.repository.VisitRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
-@Named
+@Service
+@javax.transaction.Transactional
 public class VisitServiceImpl implements VisitService {
     private final VisitRepository visitRepository;
 

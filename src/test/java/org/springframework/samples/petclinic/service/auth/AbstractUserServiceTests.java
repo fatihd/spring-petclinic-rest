@@ -1,11 +1,10 @@
-package org.springframework.samples.petclinic.service.userService;
+package org.springframework.samples.petclinic.service.auth;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.User;
-import org.springframework.samples.petclinic.service.UserService;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

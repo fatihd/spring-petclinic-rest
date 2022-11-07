@@ -47,7 +47,8 @@ dependencies {
 //    annotationProcessor 'org.projectlombok:lombok'
 //    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
-    implementation 'jakarta.inject:jakarta.inject-api:2.0.1.MR'
+//    implementation 'javax:javaee-api:8.0.1'
+    implementation 'javax.inject:javax.inject:1'
 
     runtimeOnly 'org.hsqldb:hsqldb:2.5.2'
     runtimeOnly 'mysql:mysql-connector-java:8.0.27'

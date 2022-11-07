@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.service.userService;
+package org.springframework.samples.petclinic.service.auth;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;

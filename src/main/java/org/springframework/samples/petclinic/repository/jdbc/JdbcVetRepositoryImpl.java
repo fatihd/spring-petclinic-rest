@@ -68,7 +68,7 @@ public class JdbcVetRepositoryImpl implements VetRepository {
     }
 
     /**
-     * Refresh the cache of Vets that the ClinicService is holding.
+     * Refresh the cache of Vets that the service is holding.
      */
     @Override
     public Collection<Vet> findAll() {

@@ -23,7 +23,7 @@ import org.springframework.samples.petclinic.mapper.PetTypeMapper;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.rest.api.PettypesApi;
 import org.springframework.samples.petclinic.rest.dto.PetTypeDto;
-import org.springframework.samples.petclinic.service.ClinicService;
+import org.springframework.samples.petclinic.service.clinic.PetTypeService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -37,19 +37,20 @@ import java.util.List;
 @RequestMapping("api")
 public class PetTypeRestController implements PettypesApi {
 
-    private final ClinicService clinicService;
+    private final PetTypeService petTypeService;
+
     private final PetTypeMapper petTypeMapper;
 
 
-    public PetTypeRestController(ClinicService clinicService, PetTypeMapper petTypeMapper) {
-        this.clinicService = clinicService;
+    public PetTypeRestController(PetTypeService petTypeService, PetTypeMapper petTypeMapper) {
+        this.petTypeService = petTypeService;
         this.petTypeMapper = petTypeMapper;
     }
 
     @PreAuthorize("hasAnyRole(@roles.OWNER_ADMIN, @roles.VET_ADMIN)")
     @Override
     public ResponseEntity<List<PetTypeDto>> listPetTypes() {
-        List<PetType> petTypes = new ArrayList<>(this.clinicService.findAllPetTypes());
+        List<PetType> petTypes = new ArrayList<>(this.petTypeService.findAllPetTypes());
         if (petTypes.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -59,7 +60,7 @@ public class PetTypeRestController implements PettypesApi {
     @PreAuthorize("hasAnyRole(@roles.OWNER_ADMIN, @roles.VET_ADMIN)")
     @Override
     public ResponseEntity<PetTypeDto> getPetType(Integer petTypeId) {
-        PetType petType = this.clinicService.findPetTypeById(petTypeId);
+        PetType petType = this.petTypeService.findPetTypeById(petTypeId);
         if (petType == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -71,7 +72,7 @@ public class PetTypeRestController implements PettypesApi {
     public ResponseEntity<PetTypeDto> addPetType(PetTypeDto petTypeDto) {
         HttpHeaders headers = new HttpHeaders();
         final PetType type = petTypeMapper.toPetType(petTypeDto);
-        this.clinicService.savePetType(type);
+        this.petTypeService.savePetType(type);
         headers.setLocation(UriComponentsBuilder.newInstance().path("/api/pettypes/{id}").buildAndExpand(type.getId()).toUri());
         return new ResponseEntity<>(petTypeMapper.toPetTypeDto(type), headers, HttpStatus.CREATED);
     }
@@ -79,12 +80,12 @@ public class PetTypeRestController implements PettypesApi {
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
     @Override
     public ResponseEntity<PetTypeDto> updatePetType(Integer petTypeId, PetTypeDto petTypeDto) {
-        PetType currentPetType = this.clinicService.findPetTypeById(petTypeId);
+        PetType currentPetType = this.petTypeService.findPetTypeById(petTypeId);
         if (currentPetType == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         currentPetType.setName(petTypeDto.getName());
-        this.clinicService.savePetType(currentPetType);
+        this.petTypeService.savePetType(currentPetType);
         return new ResponseEntity<>(petTypeMapper.toPetTypeDto(currentPetType), HttpStatus.NO_CONTENT);
     }
 
@@ -92,11 +93,11 @@ public class PetTypeRestController implements PettypesApi {
     @Transactional
     @Override
     public ResponseEntity<PetTypeDto> deletePetType(Integer petTypeId) {
-        PetType petType = this.clinicService.findPetTypeById(petTypeId);
+        PetType petType = this.petTypeService.findPetTypeById(petTypeId);
         if (petType == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        this.clinicService.deletePetType(petType);
+        this.petTypeService.deletePetType(petType);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
