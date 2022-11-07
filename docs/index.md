@@ -1,3 +1,3 @@
 ---
-title: Welcome to PETCLINIC
+title: Welcome to Petclinic revisited
 ---
