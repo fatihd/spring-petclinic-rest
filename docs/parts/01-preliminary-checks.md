@@ -1,3 +1,4 @@
+## Preliminary checks
 
 ### directory structure of the project:
 ```bash
