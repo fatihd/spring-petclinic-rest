@@ -85,6 +85,18 @@ Deleted.
 
 
 #### Visit
-- Default ctor left for now.
+- Default constructor left for now.
 - useless javadoc particularly egregious
 
+#### Constructor Injection
+
+In all controllers except for `RootRestController` we replace the existing constructor
+with Lombok's `@RequiredArgsConstructor` annotation. 
+As we have said before, this is to reduce boilerplate and increase signal-to-noise ratio.
+Lombok's primary benefit is not it saving us from typing stuff, which is easy; 
+but to save us from reading stuff, paying attention it indeed is doing exactly 
+what is expected to be doing.
+
+Similarly, we mark the dependencies of `ClinicServiceImpl` and `UserServiceImpl`
+as final and we remove existing constructor while adding `@RequiredArgsConstructor` 
+annotations to these classes.

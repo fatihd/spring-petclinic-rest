@@ -16,6 +16,7 @@
 
 package org.springframework.samples.petclinic.rest.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,16 +40,12 @@ import java.util.List;
 @RestController
 @CrossOrigin(exposedHeaders = "errors, content-type")
 @RequestMapping("api")
+@RequiredArgsConstructor
 public class SpecialtyRestController implements SpecialtiesApi {
 
     private final ClinicService clinicService;
 
     private final SpecialtyMapper specialtyMapper;
-
-    public SpecialtyRestController(ClinicService clinicService, SpecialtyMapper specialtyMapper) {
-        this.clinicService = clinicService;
-        this.specialtyMapper = specialtyMapper;
-    }
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
     @Override

@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
@@ -45,30 +46,16 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Vitaliy Fedoriv
  */
 @Service
+@RequiredArgsConstructor
 public class ClinicServiceImpl implements ClinicService {
 
-    private PetRepository petRepository;
-    private VetRepository vetRepository;
-    private OwnerRepository ownerRepository;
-    private VisitRepository visitRepository;
-    private SpecialtyRepository specialtyRepository;
-	private PetTypeRepository petTypeRepository;
+    private final PetRepository petRepository;
+    private final VetRepository vetRepository;
+    private final OwnerRepository ownerRepository;
+    private final VisitRepository visitRepository;
+    private final SpecialtyRepository specialtyRepository;
+	private final PetTypeRepository petTypeRepository;
 
-    @Autowired
-     public ClinicServiceImpl(
-       		 PetRepository petRepository,
-    		 VetRepository vetRepository,
-    		 OwnerRepository ownerRepository,
-    		 VisitRepository visitRepository,
-    		 SpecialtyRepository specialtyRepository,
-			 PetTypeRepository petTypeRepository) {
-        this.petRepository = petRepository;
-        this.vetRepository = vetRepository;
-        this.ownerRepository = ownerRepository;
-        this.visitRepository = visitRepository;
-        this.specialtyRepository = specialtyRepository;
-		this.petTypeRepository = petTypeRepository;
-    }
 
 	@Override
 	@Transactional(readOnly = true)
