@@ -8,9 +8,13 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "roles" ,uniqueConstraints = @UniqueConstraint(columnNames = {"username", "role"}))
+@Getter
+@Setter
 public class Role extends BaseEntity {
 
     @ManyToOne
@@ -20,20 +24,4 @@ public class Role extends BaseEntity {
 
     @Column( name = "role")
     private String name;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

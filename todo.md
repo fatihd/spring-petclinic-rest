@@ -1,0 +1,13 @@
+- addPetType uses read model
+- build docker image
+- `BaseEntity` not abstract
+- `Base...` useless prefix
+- `NamedEntity` not abstract
+- `Owner.pets` accessors non-trivial
+- remove useless javadoc
+- `Person` not abstract
+- `Pet.visits` accessors non-trivial
+- Why is `Role` not `NamedEntity`
+- `Vet.specialties` accessors non-trivial
+- `Visit` constructor non-trivial
+- 
