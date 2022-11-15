@@ -33,7 +33,7 @@ import org.springframework.samples.petclinic.rest.dto.OwnerDto;
 import org.springframework.samples.petclinic.rest.dto.PetDto;
 import org.springframework.samples.petclinic.rest.dto.PetTypeDto;
 import org.springframework.samples.petclinic.rest.dto.VisitDto;
-import org.springframework.samples.petclinic.service.ClinicService;
+import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.clinicService.ApplicationTestConfig;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
@@ -72,7 +72,7 @@ class OwnerRestControllerTests {
     private VisitMapper visitMapper;
 
     @MockBean
-    private ClinicService clinicService;
+    private OwnerService ownerService;
 
     private MockMvc mockMvc;
 
@@ -146,7 +146,7 @@ class OwnerRestControllerTests {
     @Test
     @WithMockUser(roles = "OWNER_ADMIN")
     void testGetOwnerSuccess() throws Exception {
-        given(this.clinicService.findOwnerById(1)).willReturn(ownerMapper.toOwner(owners.get(0)));
+        given(this.ownerService.findOwnerById(1)).willReturn(ownerMapper.toOwner(owners.get(0)));
         this.mockMvc.perform(get("/api/owners/1")
                 .accept(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk())
@@ -158,7 +158,7 @@ class OwnerRestControllerTests {
     @Test
     @WithMockUser(roles = "OWNER_ADMIN")
     void testGetOwnerNotFound() throws Exception {
-        given(this.clinicService.findOwnerById(2)).willReturn(null);
+        given(this.ownerService.findOwnerById(2)).willReturn(null);
         this.mockMvc.perform(get("/api/owners/2")
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
@@ -169,7 +169,7 @@ class OwnerRestControllerTests {
     void testGetOwnersListSuccess() throws Exception {
         owners.remove(0);
         owners.remove(1);
-        given(this.clinicService.findOwnerByLastName("Davis")).willReturn(ownerMapper.toOwners(owners));
+        given(this.ownerService.findOwnerByLastName("Davis")).willReturn(ownerMapper.toOwners(owners));
         this.mockMvc.perform(get("/api/owners?lastName=Davis")
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
@@ -184,7 +184,7 @@ class OwnerRestControllerTests {
     @WithMockUser(roles = "OWNER_ADMIN")
     void testGetOwnersListNotFound() throws Exception {
         owners.clear();
-        given(this.clinicService.findOwnerByLastName("0")).willReturn(ownerMapper.toOwners(owners));
+        given(this.ownerService.findOwnerByLastName("0")).willReturn(ownerMapper.toOwners(owners));
         this.mockMvc.perform(get("/api/owners/?lastName=0")
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
@@ -195,7 +195,7 @@ class OwnerRestControllerTests {
     void testGetAllOwnersSuccess() throws Exception {
         owners.remove(0);
         owners.remove(1);
-        given(this.clinicService.findAllOwners()).willReturn(ownerMapper.toOwners(owners));
+        given(this.ownerService.findAllOwners()).willReturn(ownerMapper.toOwners(owners));
         this.mockMvc.perform(get("/api/owners/")
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
@@ -210,7 +210,7 @@ class OwnerRestControllerTests {
     @WithMockUser(roles = "OWNER_ADMIN")
     void testGetAllOwnersNotFound() throws Exception {
         owners.clear();
-        given(this.clinicService.findAllOwners()).willReturn(ownerMapper.toOwners(owners));
+        given(this.ownerService.findAllOwners()).willReturn(ownerMapper.toOwners(owners));
         this.mockMvc.perform(get("/api/owners/")
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
@@ -248,7 +248,7 @@ class OwnerRestControllerTests {
     @Test
     @WithMockUser(roles = "OWNER_ADMIN")
     void testUpdateOwnerSuccess() throws Exception {
-        given(this.clinicService.findOwnerById(1)).willReturn(ownerMapper.toOwner(owners.get(0)));
+        given(this.ownerService.findOwnerById(1)).willReturn(ownerMapper.toOwner(owners.get(0)));
         int ownerId = owners.get(0).getId();
         OwnerDto updatedOwnerDto = new OwnerDto();
         // body.id = ownerId which is used in url path
@@ -279,7 +279,7 @@ class OwnerRestControllerTests {
     @Test
     @WithMockUser(roles = "OWNER_ADMIN")
     void testUpdateOwnerSuccessNoBodyId() throws Exception {
-        given(this.clinicService.findOwnerById(1)).willReturn(ownerMapper.toOwner(owners.get(0)));
+        given(this.ownerService.findOwnerById(1)).willReturn(ownerMapper.toOwner(owners.get(0)));
         int ownerId = owners.get(0).getId();
         OwnerDto updatedOwnerDto = new OwnerDto();
         updatedOwnerDto.setFirstName("GeorgeI");
@@ -325,7 +325,7 @@ class OwnerRestControllerTests {
         mapper.registerModule(new JavaTimeModule());
         String newOwnerAsJSON = mapper.writeValueAsString(newOwnerDto);
         final Owner owner = ownerMapper.toOwner(owners.get(0));
-        given(this.clinicService.findOwnerById(1)).willReturn(owner);
+        given(this.ownerService.findOwnerById(1)).willReturn(owner);
         this.mockMvc.perform(delete("/api/owners/1")
                 .content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isNoContent());
@@ -338,7 +338,7 @@ class OwnerRestControllerTests {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         String newOwnerAsJSON = mapper.writeValueAsString(newOwnerDto);
-        given(this.clinicService.findOwnerById(999)).willReturn(null);
+        given(this.ownerService.findOwnerById(999)).willReturn(null);
         this.mockMvc.perform(delete("/api/owners/999")
                 .content(newOwnerAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isNotFound());
