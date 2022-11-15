@@ -17,6 +17,12 @@ repositories {
     }
 }
 
+ext {
+    mapstructVersion = "1.5.3.Final"
+    lombokVersion = "1.18.20"
+    lombokMapstructBindingVersion = "0.2.0"
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator:2.6.2'
     implementation 'org.springframework.boot:spring-boot-starter-aop:2.6.2'
@@ -35,7 +41,6 @@ dependencies {
     implementation 'org.openapitools:jackson-databind-nullable:0.2.1'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.1'
     implementation 'org.mapstruct:mapstruct:1.4.1.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.1.Final'
     implementation 'javax.xml.bind:jaxb-api:2.3.0'
     runtimeOnly 'org.hsqldb:hsqldb:2.5.2'
     runtimeOnly 'mysql:mysql-connector-java:8.0.27'
@@ -44,6 +49,12 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test:5.6.1'
     testImplementation 'com.jayway.jsonpath:json-path:2.6.0'
     testImplementation 'org.mockito:mockito-core:4.0.0'
+
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}",
+            "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}",
+            "org.projectlombok:lombok:${lombokVersion}",
+            "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
 }
 
 group = 'org.springframework.samples'
@@ -124,11 +135,11 @@ jacocoTestCoverageVerification {
             limit {
                 limit {
                     counter = 'LINE'
-                    minimum = 0.85
+                    minimum = 0.88
                 }
                 limit {
                     counter = 'BRANCH'
-                    minimum = 0.66
+                    minimum = 0.69
                 }
             }
         }

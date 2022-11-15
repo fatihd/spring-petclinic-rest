@@ -16,6 +16,7 @@
 
 package org.springframework.samples.petclinic.rest.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,15 +36,11 @@ import javax.validation.Valid;
 @RestController
 @CrossOrigin(exposedHeaders = "errors, content-type")
 @RequestMapping("api")
+@RequiredArgsConstructor
 public class UserRestController implements UsersApi {
 
     private final UserService userService;
     private final UserMapper userMapper;
-
-    public UserRestController(UserService userService, UserMapper userMapper) {
-        this.userService = userService;
-        this.userMapper = userMapper;
-    }
 
 
     @PreAuthorize( "hasRole(@roles.ADMIN)" )
