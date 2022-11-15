@@ -25,7 +25,7 @@ import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.rest.api.VetsApi;
 import org.springframework.samples.petclinic.rest.dto.VetDto;
-import org.springframework.samples.petclinic.service.ClinicService;
+import org.springframework.samples.petclinic.service.VetService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -44,7 +44,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VetRestController implements VetsApi {
 
-    private final ClinicService clinicService;
+    private final VetService vetService;
     private final VetMapper vetMapper;
     private final SpecialtyMapper specialtyMapper;
 
@@ -52,7 +52,7 @@ public class VetRestController implements VetsApi {
     @Override
     public ResponseEntity<List<VetDto>> listVets() {
         List<VetDto> vets = new ArrayList<>();
-        vets.addAll(vetMapper.toVetDtos(this.clinicService.findAllVets()));
+        vets.addAll(vetMapper.toVetDtos(this.vetService.findAllVets()));
         if (vets.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -62,7 +62,7 @@ public class VetRestController implements VetsApi {
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
     @Override
     public ResponseEntity<VetDto> getVet(Integer vetId)  {
-        Vet vet = this.clinicService.findVetById(vetId);
+        Vet vet = this.vetService.findVetById(vetId);
         if (vet == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -74,7 +74,7 @@ public class VetRestController implements VetsApi {
     public ResponseEntity<VetDto> addVet(VetDto vetDto) {
         HttpHeaders headers = new HttpHeaders();
         Vet vet = vetMapper.toVet(vetDto);
-        this.clinicService.saveVet(vet);
+        this.vetService.saveVet(vet);
         headers.setLocation(UriComponentsBuilder.newInstance().path("/api/vets/{id}").buildAndExpand(vet.getId()).toUri());
         return new ResponseEntity<>(vetMapper.toVetDto(vet), headers, HttpStatus.CREATED);
     }
@@ -82,7 +82,7 @@ public class VetRestController implements VetsApi {
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
     @Override
     public ResponseEntity<VetDto> updateVet(Integer vetId,VetDto vetDto)  {
-        Vet currentVet = this.clinicService.findVetById(vetId);
+        Vet currentVet = this.vetService.findVetById(vetId);
         if (currentVet == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -92,7 +92,7 @@ public class VetRestController implements VetsApi {
         for (Specialty spec : specialtyMapper.toSpecialtys(vetDto.getSpecialties())) {
             currentVet.addSpecialty(spec);
         }
-        this.clinicService.saveVet(currentVet);
+        this.vetService.saveVet(currentVet);
         return new ResponseEntity<>(vetMapper.toVetDto(currentVet), HttpStatus.NO_CONTENT);
     }
 
@@ -100,11 +100,11 @@ public class VetRestController implements VetsApi {
     @Transactional
     @Override
     public ResponseEntity<VetDto> deleteVet(Integer vetId) {
-        Vet vet = this.clinicService.findVetById(vetId);
+        Vet vet = this.vetService.findVetById(vetId);
         if (vet == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        this.clinicService.deleteVet(vet);
+        this.vetService.deleteVet(vet);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
