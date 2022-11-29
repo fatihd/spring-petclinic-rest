@@ -10,4 +10,5 @@
 - Why is `Role` not `NamedEntity`
 - `Vet.specialties` accessors non-trivial
 - `Visit` constructor non-trivial
-- 
+- A general handling strategy for missing entities needed.
+- `findById` methods have multiple responsibilities.
